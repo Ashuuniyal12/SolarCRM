@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-dark: #050505;
+  --text-primary: rgba(255, 255, 255, 0.9);
+  --text-secondary: rgba(255, 255, 255, 0.6);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Laser beam running around border */
+@keyframes laser-beam {
+  0% {
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+  }
+
+  25% {
+    top: 0;
+    left: auto;
+    right: 0;
+    width: 100%;
+    height: 2px;
+  }
+
+  25.001% {
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 0%;
+  }
+
+  50% {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+  }
+
+  50.001% {
+    bottom: 0;
+    right: 0;
+    width: 0%;
+    height: 2px;
+  }
+
+  75% {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+  }
+
+  75.001% {
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    height: 0%;
+  }
+
+  100% {
+    top: 0;
+    bottom: auto;
+    left: 0;
+    width: 2px;
+    height: 100%;
+  }
+}
