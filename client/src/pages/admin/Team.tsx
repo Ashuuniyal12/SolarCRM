@@ -13,33 +13,33 @@ const EmployeeCard = ({ node }: { node: any }) => {
     };
 
     return (
-        <div className={`relative bg-white rounded-xl shadow-lg p-0 w-[280px] group transition-transform hover:-translate-y-1 duration-300`}>
+        <div className={`relative bg-slate-900 border border-slate-700/50 rounded-xl shadow-xl p-0 w-[280px] group transition-all hover:-translate-y-1 duration-300 hover:shadow-2xl hover:shadow-blue-500/10`}>
             {/* Colorful Top Border */}
-            <div className={`absolute top-0 left-0 right-0 h-1.5 rounded-t-xl ${getBorderColor(node.role)} bg-gradient-to-r from-current to-current opacity-80`} />
+            <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-xl ${getBorderColor(node.role)} bg-gradient-to-r from-current to-current shadow-[0_0_10px_currentColor] opacity-80`} />
 
             <div className="p-5 flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border-2 border-slate-50 shrink-0">
+                <div className="w-14 h-14 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden border-2 border-slate-700 shrink-0 shadow-inner">
                     {/* Placeholder Avatar */}
                     <span className="text-xl font-bold text-slate-400">
                         {node.name.split(' ').map((n: string) => n[0]).join('')}
                     </span>
                 </div>
                 <div>
-                    <h3 className="font-bold text-slate-900 text-lg leading-tight">{node.name}</h3>
-                    <p className="text-slate-500 text-sm font-medium mt-0.5">{node.role}</p>
+                    <h3 className="font-bold text-white text-lg leading-tight">{node.name}</h3>
+                    <p className="text-slate-400 text-sm font-medium mt-0.5">{node.role}</p>
                 </div>
             </div>
 
             {/* Divider */}
-            <div className="h-px bg-slate-100 mx-4" />
+            <div className="h-px bg-slate-800 mx-4" />
 
             {/* Action Footer */}
-            <div className="px-4 py-3 flex items-center justify-between text-slate-400">
-                <button className="hover:text-blue-500 transition-colors"><Phone size={16} /></button>
-                <button className="hover:text-blue-500 transition-colors"><Mail size={16} /></button>
-                <button className="hover:text-blue-700 transition-colors"><Linkedin size={16} /></button>
-                <button className="hover:text-slate-600 transition-colors"><FileText size={16} /></button>
-                <button className="hover:text-slate-600 transition-colors"><MoreHorizontal size={16} /></button>
+            <div className="px-4 py-3 flex items-center justify-between text-slate-500">
+                <button className="hover:text-blue-400 hover:bg-blue-500/10 p-1.5 rounded-lg transition-all"><Phone size={16} /></button>
+                <button className="hover:text-blue-400 hover:bg-blue-500/10 p-1.5 rounded-lg transition-all"><Mail size={16} /></button>
+                <button className="hover:text-blue-500 hover:bg-blue-600/10 p-1.5 rounded-lg transition-all"><Linkedin size={16} /></button>
+                <button className="hover:text-slate-300 hover:bg-slate-700 p-1.5 rounded-lg transition-all"><FileText size={16} /></button>
+                <button className="hover:text-slate-300 hover:bg-slate-700 p-1.5 rounded-lg transition-all"><MoreHorizontal size={16} /></button>
             </div>
         </div>
     );
@@ -57,7 +57,7 @@ const OrgTreeNode = ({ node }: { node: any }) => {
 
                 {/* Vertical line going down from parent */}
                 {hasChildren && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-300" />
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-700/50" />
                 )}
             </div>
 
@@ -66,7 +66,7 @@ const OrgTreeNode = ({ node }: { node: any }) => {
                 <div className="relative flex gap-8 pt-8">
                     {/* Horizontal connector line */}
                     {node.children.length > 1 && (
-                        <div className="absolute top-0 left-[calc(140px)] right-[calc(140px)] h-0.5 bg-slate-300 transform -translate-y-1/2" />
+                        <div className="absolute top-0 left-[calc(140px)] right-[calc(140px)] h-0.5 bg-slate-700/50 transform -translate-y-1/2" />
                     )}
 
                     {/* Render children recursively */}
@@ -74,7 +74,7 @@ const OrgTreeNode = ({ node }: { node: any }) => {
                     {node.children.map((child: any) => (
                         <div key={child.id} className="relative flex flex-col items-center">
                             {/* Vertical line going up to the connector/parent */}
-                            <div className="absolute bottom-[100%] left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-300">
+                            <div className="absolute bottom-[100%] left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-700/50">
                                 {/* Rounded corner logic could go here for perfect curves, but simple lines work for this MVP */}
                             </div>
 
