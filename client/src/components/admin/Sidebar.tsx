@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Kanban, Calendar, Users, FileText, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Kanban, Calendar, Users, FileText, Settings, LogOut, Mail, Globe, Network } from 'lucide-react';
 
 const Sidebar = () => {
     const navItems = [
@@ -7,6 +7,9 @@ const Sidebar = () => {
         { name: 'Pipeline', path: '/admin/pipeline', icon: Kanban },
         { name: 'Schedule', path: '/admin/schedule', icon: Calendar },
         { name: 'Customers', path: '/admin/customers', icon: Users },
+        { name: 'Team', path: '/admin/team', icon: Network },
+        { name: 'Email', path: '/admin/email', icon: Mail },
+        { name: 'Website', path: '/admin/website', icon: Globe },
         { name: 'Reports', path: '/admin/reports', icon: FileText },
     ];
 
