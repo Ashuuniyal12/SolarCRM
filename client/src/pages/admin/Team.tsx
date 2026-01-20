@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { teamHierarchy } from '../../data/mockData';
-import { Phone, Mail, FileText, Linkedin, MoreHorizontal } from 'lucide-react';
+import { Phone, Mail, FileText, Linkedin, MoreHorizontal, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EmployeeCard = ({ node }: { node: any }) => {
@@ -87,21 +88,55 @@ const OrgTreeNode = ({ node }: { node: any }) => {
 };
 
 const Team = () => {
+    const [zoom, setZoom] = useState(1);
+
+    const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.1, 2.0));
+    const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.1, 0.4));
+    const handleReset = () => setZoom(1);
+
     return (
-        <div className="h-full flex flex-col">
+        <div className="h-full flex flex-col relative">
             <div className="mb-6 px-4">
                 <h1 className="text-3xl font-bold text-white tracking-tight">Team Hierarchy</h1>
                 <p className="text-slate-400 mt-2">Organization structure and reporting lines.</p>
             </div>
 
             {/* Scrollable Container for the massive chart */}
-            <div className="flex-1 overflow-auto bg-slate-900/30 rounded-2xl border border-slate-800 p-8">
-                <div className="min-w-max flex justify-center pb-20 pt-10">
+            <div className="flex-1 overflow-auto bg-slate-900/30 rounded-2xl border border-slate-800 relative">
+                <div
+                    className="min-w-max flex justify-center pb-20 pt-10 transition-transform duration-200 origin-top"
+                    style={{ transform: `scale(${zoom})` }}
+                >
                     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {teamHierarchy.map((root: any) => (
                         <OrgTreeNode key={root.id} node={root} />
                     ))}
                 </div>
+            </div>
+
+            {/* Zoom Controls */}
+            <div className="absolute bottom-8 right-8 flex flex-col gap-2 bg-slate-900 border border-slate-700 p-2 rounded-xl shadow-xl z-20">
+                <button
+                    onClick={handleZoomIn}
+                    className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors"
+                    title="Zoom In"
+                >
+                    <ZoomIn size={20} />
+                </button>
+                <button
+                    onClick={handleReset}
+                    className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors"
+                    title="Reset Zoom"
+                >
+                    <RotateCcw size={20} />
+                </button>
+                <button
+                    onClick={handleZoomOut}
+                    className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors"
+                    title="Zoom Out"
+                >
+                    <ZoomOut size={20} />
+                </button>
             </div>
         </div>
     );
