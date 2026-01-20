@@ -36,3 +36,41 @@ export const recentActivity = [
     { id: 3, user: 'Admin', action: 'Scheduled Install', target: 'P-102 (Sarah Miller)', time: '1 day ago' },
     { id: 4, user: 'City Inspector', action: 'Inspection Pending', target: 'P-103 (Michael Chen)', time: '1 day ago' },
 ];
+
+export const dummyEmails = [
+    { id: 1, sender: "John Doe (CEO)", subject: "Q1 Targets Achieved", preview: "Great work team, we have surpassed our Q1 installation targets...", date: "10:30 AM", read: false },
+    { id: 2, sender: "HR Department", subject: "New Policy Update", preview: "Please review the attached document regarding the new field safety protocols...", date: "Yesterday", read: true },
+    { id: 3, sender: "Sarah Miller (Client)", subject: "Installation Feedback", preview: "I just wanted to say that the crew was fantastic today...", date: "Jan 18", read: true },
+    { id: 4, sender: "Vendor Support", subject: "Invoice #4023 Overdue", preview: "This is a reminder that invoice #4023 for solar panels is now overdue...", date: "Jan 15", read: true },
+    { id: 5, sender: "Mike Ross", subject: "Sick Leave Request", preview: "Hey, I'm not feeling well and won't be able to make it to the survey tomorrow...", date: "Jan 14", read: true },
+];
+
+export const teamHierarchy = [
+    {
+        id: "CEO-1", name: "Alex Sterling", role: "CEO", children: [
+            {
+                id: "VP-OPS-1", name: "Marcus Thorne", role: "VP of Operations", children: [
+                    {
+                        id: "MGR-1", name: "Elena Rodriguez", role: "Regional Manager (West)", children: [
+                            { id: "CREW-1", name: "Mike Ross", role: "Surveyor" },
+                            { id: "CREW-2", name: "Jessica Suits", role: "Lead Installer" },
+                            { id: "CREW-3", name: "Harvey Specter", role: "Inspector" }
+                        ]
+                    },
+                    {
+                        id: "MGR-2", name: "David Kim", role: "Regional Manager (East)", children: [
+                            { id: "CREW-4", name: "Louis Litt", role: "Installer" },
+                            { id: "CREW-5", name: "Donna Paulsen", role: "Coordinator" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "VP-SALES-1", name: "Rachel Zane", role: "VP of Sales", children: [
+                    { id: "SALES-1", name: "Katrina Bennett", role: "Sales Lead" },
+                    { id: "SALES-2", name: "Harold Gunderson", role: "Sales Rep" }
+                ]
+            }
+        ]
+    }
+];

@@ -8,6 +8,9 @@ import Pipeline from './pages/admin/Pipeline';
 import Schedule from './pages/admin/Schedule';
 import Customers from './pages/admin/Customers';
 import Reports from './pages/admin/Reports';
+import Email from './pages/admin/Email';
+import Team from './pages/admin/Team';
+import Website from './pages/admin/Website';
 import './styles/globals.css';
 
 function App() {
@@ -25,6 +28,9 @@ function App() {
                     <Route path="pipeline" element={<Pipeline />} />
                     <Route path="schedule" element={<Schedule />} />
                     <Route path="customers" element={<Customers />} />
+                    <Route path="email" element={<Email />} />
+                    <Route path="team" element={<Team />} />
+                    <Route path="website" element={<Website />} />
                     <Route path="reports" element={<Reports />} />
                 </Route>
 
