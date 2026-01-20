@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { events } from '../../data/mockData';
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, MapPin, User } from 'lucide-react';
+import { ChevronLeft, ChevronRight, User } from 'lucide-react';
 
 const Schedule = () => {
     const [currentDate, setCurrentDate] = useState(new Date(2026, 0, 20)); // Jan 20, 2026 as per user time
+
+    const prevMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    const nextMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
 
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
     const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
@@ -37,13 +40,19 @@ const Schedule = () => {
                     <p className="text-slate-400 mt-2">Manage field operations and appointments.</p>
                 </div>
                 <div className="flex items-center bg-slate-900 border border-slate-800 rounded-xl p-1">
-                    <button className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors">
+                    <button
+                        onClick={prevMonth}
+                        className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors"
+                    >
                         <ChevronLeft size={20} />
                     </button>
                     <div className="px-4 font-bold text-white min-w-[140px] text-center">
                         {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
                     </div>
-                    <button className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors">
+                    <button
+                        onClick={nextMonth}
+                        className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors"
+                    >
                         <ChevronRight size={20} />
                     </button>
                 </div>

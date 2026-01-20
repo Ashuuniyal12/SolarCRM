@@ -1,6 +1,5 @@
-import React from 'react';
 import { projects } from '../../data/mockData';
-import { MoreHorizontal, Plus, MapPin, Calendar, CheckCircle2 } from 'lucide-react';
+import { MoreHorizontal, Plus, MapPin } from 'lucide-react';
 
 const Pipeline = () => {
     const stages = ['Lead', 'Site Survey', 'Install', 'Inspection'];

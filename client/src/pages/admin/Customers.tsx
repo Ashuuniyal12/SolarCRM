@@ -1,4 +1,3 @@
-import React from 'react';
 import { customers } from '../../data/mockData';
 import { Mail, Phone, MapPin, Search, Filter } from 'lucide-react';
 

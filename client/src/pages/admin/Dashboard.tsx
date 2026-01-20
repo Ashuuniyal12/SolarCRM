@@ -1,6 +1,5 @@
-import React from 'react';
 import { stats, recentActivity } from '../../data/mockData';
-import { TrendingUp, Activity, ArrowRight } from 'lucide-react';
+import { TrendingUp, Activity } from 'lucide-react';
 
 const Dashboard = () => {
     return (
@@ -13,8 +12,8 @@ const Dashboard = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {stats.map((stat, index) => (
-                    <div key={index} className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors group">
+                {stats.map((stat) => (
+                    <div key={stat.label} className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors group">
                         <div className="flex items-start justify-between mb-4">
                             <div className={`w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center ${stat.color} bg-opacity-10 group-hover:scale-110 transition-transform`}>
                                 <stat.icon size={24} className={stat.color} />
@@ -40,7 +39,7 @@ const Dashboard = () => {
                         <button className="text-sm text-blue-400 hover:text-blue-300 font-medium">View All</button>
                     </div>
                     <div className="space-y-6">
-                        {recentActivity.map((activity, index) => (
+                        {recentActivity.map((activity) => (
                             <div key={activity.id} className="flex items-start gap-4 pb-6 border-b border-slate-800/50 last:border-0 last:pb-0">
                                 <div className="w-2 h-2 mt-2 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50" />
                                 <div className="flex-1">
