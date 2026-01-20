@@ -1,38 +1,84 @@
 import { teamHierarchy } from '../../data/mockData';
-import { User } from 'lucide-react';
+import { Phone, Mail, FileText, Linkedin, MoreHorizontal } from 'lucide-react';
 
-// Recursive component for rendering tree
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const TreeNode = ({ node, level = 0 }: { node: any, level?: number }) => {
-    const hasChildren = node.children && node.children.length > 0;
+const EmployeeCard = ({ node }: { node: any }) => {
+    // Determine border color based on role for visual distinction
+    const getBorderColor = (role: string) => {
+        if (role.includes('CEO')) return 'border-orange-500';
+        if (role.includes('VP')) return 'border-purple-500';
+        if (role.includes('Manager')) return 'border-blue-500';
+        return 'border-slate-500';
+    };
 
     return (
-        <div className={`ml-${level > 0 ? '8' : '0'} relative`}>
-            {/* Connector lines for deep levels */}
-            {level > 0 && (
-                <div className="absolute -left-6 top-6 w-6 h-px bg-slate-700" />
-            )}
-            {level > 0 && (
-                <div className="absolute -left-6 -top-2 h-[34px] w-px bg-slate-700" />
-            )}
+        <div className={`relative bg-white rounded-xl shadow-lg p-0 w-[280px] group transition-transform hover:-translate-y-1 duration-300`}>
+            {/* Colorful Top Border */}
+            <div className={`absolute top-0 left-0 right-0 h-1.5 rounded-t-xl ${getBorderColor(node.role)} bg-gradient-to-r from-current to-current opacity-80`} />
 
-            <div className={`flex items-start gap-4 p-4 rounded-xl border mb-4 bg-slate-900/50 border-slate-800 hover:border-blue-500/50 transition-colors w-full max-w-md relative z-10`}>
-                <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700">
-                    <User size={20} className="text-slate-400" />
+            <div className="p-5 flex items-center gap-4">
+                <div className="w-14 h-14 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border-2 border-slate-50 shrink-0">
+                    {/* Placeholder Avatar */}
+                    <span className="text-xl font-bold text-slate-400">
+                        {node.name.split(' ').map((n: string) => n[0]).join('')}
+                    </span>
                 </div>
                 <div>
-                    <h4 className="text-white font-bold">{node.name}</h4>
-                    <p className="text-sm text-blue-400">{node.role}</p>
+                    <h3 className="font-bold text-slate-900 text-lg leading-tight">{node.name}</h3>
+                    <p className="text-slate-500 text-sm font-medium mt-0.5">{node.role}</p>
                 </div>
             </div>
 
-            {hasChildren && (
-                <div className="relative border-l border-slate-800/0 ml-4 pl-4">
-                    {/* Vertical line connecting children */}
-                    <div className="absolute left-[-2px] top-0 bottom-6 w-px bg-slate-700" />
+            {/* Divider */}
+            <div className="h-px bg-slate-100 mx-4" />
 
+            {/* Action Footer */}
+            <div className="px-4 py-3 flex items-center justify-between text-slate-400">
+                <button className="hover:text-blue-500 transition-colors"><Phone size={16} /></button>
+                <button className="hover:text-blue-500 transition-colors"><Mail size={16} /></button>
+                <button className="hover:text-blue-700 transition-colors"><Linkedin size={16} /></button>
+                <button className="hover:text-slate-600 transition-colors"><FileText size={16} /></button>
+                <button className="hover:text-slate-600 transition-colors"><MoreHorizontal size={16} /></button>
+            </div>
+        </div>
+    );
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const OrgTreeNode = ({ node }: { node: any }) => {
+    const hasChildren = node.children && node.children.length > 0;
+
+    return (
+        <div className="flex flex-col items-center">
+            {/* The Node Card */}
+            <div className="relative z-10 mb-8">
+                <EmployeeCard node={node} />
+
+                {/* Vertical line going down from parent */}
+                {hasChildren && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-300" />
+                )}
+            </div>
+
+            {/* The Children */}
+            {hasChildren && (
+                <div className="relative flex gap-8 pt-8">
+                    {/* Horizontal connector line */}
+                    {node.children.length > 1 && (
+                        <div className="absolute top-0 left-[calc(140px)] right-[calc(140px)] h-0.5 bg-slate-300 transform -translate-y-1/2" />
+                    )}
+
+                    {/* Render children recursively */}
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {node.children.map((child: any) => (
-                        <TreeNode key={child.id} node={child} level={level + 1} />
+                        <div key={child.id} className="relative flex flex-col items-center">
+                            {/* Vertical line going up to the connector/parent */}
+                            <div className="absolute bottom-[100%] left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-300">
+                                {/* Rounded corner logic could go here for perfect curves, but simple lines work for this MVP */}
+                            </div>
+
+                            <OrgTreeNode node={child} />
+                        </div>
                     ))}
                 </div>
             )}
@@ -42,16 +88,20 @@ const TreeNode = ({ node, level = 0 }: { node: any, level?: number }) => {
 
 const Team = () => {
     return (
-        <div className="p-4">
-            <div className="mb-8">
+        <div className="h-full flex flex-col">
+            <div className="mb-6 px-4">
                 <h1 className="text-3xl font-bold text-white tracking-tight">Team Hierarchy</h1>
                 <p className="text-slate-400 mt-2">Organization structure and reporting lines.</p>
             </div>
 
-            <div className="overflow-x-auto pb-20">
-                {teamHierarchy.map((root: any) => (
-                    <TreeNode key={root.id} node={root} />
-                ))}
+            {/* Scrollable Container for the massive chart */}
+            <div className="flex-1 overflow-auto bg-slate-900/30 rounded-2xl border border-slate-800 p-8">
+                <div className="min-w-max flex justify-center pb-20 pt-10">
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                    {teamHierarchy.map((root: any) => (
+                        <OrgTreeNode key={root.id} node={root} />
+                    ))}
+                </div>
             </div>
         </div>
     );
