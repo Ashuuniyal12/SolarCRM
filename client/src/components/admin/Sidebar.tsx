@@ -9,7 +9,7 @@ const Sidebar = () => {
         { name: 'Customers', path: '/admin/customers', icon: Users },
         { name: 'Team', path: '/admin/team', icon: Network },
         { name: 'Email', path: '/admin/email', icon: Mail },
-        { name: 'Website', path: '/admin/website', icon: Globe },
+        { name: 'Website', path: '/', icon: Globe }, // Linked to Landing Page
         { name: 'Reports', path: '/admin/reports', icon: FileText },
     ];
 
@@ -27,6 +27,8 @@ const Sidebar = () => {
                     <NavLink
                         key={item.path}
                         to={item.path}
+                        end={item.path === '/'} // Ensure exact match for root path so it doesn't stay active
+                        target={item.path === '/' ? '_blank' : undefined}
                         className={({ isActive }) =>
                             `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${isActive
                                 ? 'bg-blue-600/10 text-blue-400 border border-blue-600/20'
