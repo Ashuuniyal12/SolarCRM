@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { teamHierarchy } from '../../data/mockData';
-import { Phone, Mail, FileText, Linkedin, MoreHorizontal, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
+import { Phone, Mail, FileText, Linkedin, MoreHorizontal, ZoomIn, ZoomOut, RotateCcw, Plus, X } from 'lucide-react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EmployeeCard = ({ node }: { node: any }) => {
@@ -87,8 +87,73 @@ const OrgTreeNode = ({ node }: { node: any }) => {
     );
 };
 
+const AddMemberModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden scale-100 animate-in zoom-in-95 duration-200">
+                <div className="p-6 border-b border-slate-700 flex justify-between items-center">
+                    <h2 className="text-xl font-bold text-white">Add Team Member</h2>
+                    <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors">
+                        <X size={24} />
+                    </button>
+                </div>
+
+                <div className="p-6 space-y-4">
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-300">Full Name</label>
+                        <input type="text" className="w-full bg-slate-800 border-slate-700 rounded-lg py-2.5 px-4 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder:text-slate-500" placeholder="e.g. John Doe" />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-slate-300">Role / Title</label>
+                            <input type="text" className="w-full bg-slate-800 border-slate-700 rounded-lg py-2.5 px-4 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder:text-slate-500" placeholder="e.g. Sales Manager" />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-slate-300">Department</label>
+                            <select className="w-full bg-slate-800 border-slate-700 rounded-lg py-2.5 px-4 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all">
+                                <option>Sales</option>
+                                <option>Operations</option>
+                                <option>Installation</option>
+                                <option>Management</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-300">Email Address</label>
+                        <input type="email" className="w-full bg-slate-800 border-slate-700 rounded-lg py-2.5 px-4 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all placeholder:text-slate-500" placeholder="john@pipesolar.com" />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-300">Reports To</label>
+                        <select className="w-full bg-slate-800 border-slate-700 rounded-lg py-2.5 px-4 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all">
+                            <option value="">Select Manager...</option>
+                            <option value="1">Bagus Fikri (CEO)</option>
+                            <option value="2">Mufti Hidayat (Project Manager)</option>
+                            <option value="3">Bryan (Design Manager)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div className="p-6 border-t border-slate-700 flex justify-end gap-3 bg-slate-900/50">
+                    <button onClick={onClose} className="px-4 py-2 text-slate-300 hover:text-white font-medium hover:bg-slate-800 rounded-lg transition-colors">
+                        Cancel
+                    </button>
+                    <button onClick={onClose} className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg shadow-lg shadow-blue-500/20 transition-all transform active:scale-95">
+                        Add Member
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const Team = () => {
     const [zoom, setZoom] = useState(1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.1, 2.0));
     const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.1, 0.4));
@@ -96,9 +161,18 @@ const Team = () => {
 
     return (
         <div className="h-full flex flex-col relative">
-            <div className="mb-6 px-4">
-                <h1 className="text-3xl font-bold text-white tracking-tight">Team Hierarchy</h1>
-                <p className="text-slate-400 mt-2">Organization structure and reporting lines.</p>
+            <div className="mb-6 px-4 flex justify-between items-end">
+                <div>
+                    <h1 className="text-3xl font-bold text-white tracking-tight">Team Hierarchy</h1>
+                    <p className="text-slate-400 mt-2">Organization structure and reporting lines.</p>
+                </div>
+                <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 transition-all group"
+                >
+                    <Plus size={20} className="group-hover:rotate-90 transition-transform duration-300" />
+                    <span>Add Member</span>
+                </button>
             </div>
 
             {/* Scrollable Container for the massive chart */}
@@ -138,6 +212,8 @@ const Team = () => {
                     <ZoomOut size={20} />
                 </button>
             </div>
+
+            <AddMemberModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };
